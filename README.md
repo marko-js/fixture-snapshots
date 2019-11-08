@@ -34,8 +34,6 @@
   </a>
 </h1>
 
-# `@marko/fixture-snapshots`
-
 A tool for working with Marko component fixtures given the following directory structure:
 
 ```bash
