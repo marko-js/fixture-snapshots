@@ -84,6 +84,7 @@ type SnapshotOptions = {
 
 ```javascript
 import runSnapshotTests from "@marko/fixture-snapshots/jest";
+// const runSnapshotTests = require("@marko/fixture-snapshots/jest").default;
 
 describe("fixture snapshots", () => {
   runSnapshotTests(__dirname);
@@ -95,7 +96,8 @@ describe("fixture snapshots", () => {
 #### Usage with Mocha
 
 ```javascript
-import runSnapshotTests from "@marko/fixture-snapshots/mocha";
+import runSnapshotTests from "@marko/fixture-snapshots/mocha"; 
+// const runSnapshotTests = require("@marko/fixture-snapshots/mocha").default;
 
 describe("fixture snapshots", () => {
   runSnapshotTests(__dirname);
