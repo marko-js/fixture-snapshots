@@ -31,7 +31,7 @@ export function findComponentFixtures(
   const componentName = inferName(componentPath);
   const fixturesPath = path.join(path.dirname(componentPath), fixtureDir);
   const fixtures = glob
-    .sync("*.{json,marko}", { cwd: fixturesPath })
+    .sync("*.{json,marko,js}", { cwd: fixturesPath })
     .map((fixtureRelativePath: string) => {
       const fixturePath = path.join(fixturesPath, fixtureRelativePath);
       const fixtureExtension = path.extname(fixturePath);
@@ -39,7 +39,7 @@ export function findComponentFixtures(
         .basename(fixturePath)
         .slice(0, -1 * fixtureExtension.length);
       const renderFn =
-        fixtureExtension === ".json"
+        [".json", ".js"].indexOf(fixtureExtension) !== -1
           ? () => render(require(componentPath), require(fixturePath))
           : () => render(require(fixturePath));
       return {
@@ -56,13 +56,10 @@ export function findComponentFixtures(
         render: renderFn
       };
     })
-    .reduce(
-      (lookup, current) => {
-        lookup[current.name] = current;
-        return lookup;
-      },
-      {} as ComponentFixtures["fixtures"]
-    );
+    .reduce((lookup, current) => {
+      lookup[current.name] = current;
+      return lookup;
+    }, {} as ComponentFixtures["fixtures"]);
   if (Object.keys(fixtures).length) {
     return {
       get component() {

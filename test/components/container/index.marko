@@ -1,0 +1,9 @@
+<div.container>
+  <${input.renderBody}/>
+
+  <await(input.model)>
+    <@then|model|>
+      ${model}
+    </@then>
+  </await>
+</div>

@@ -61,6 +61,25 @@ describe("findProjectFixtures", () => {
     expect(findProjectFixtures(__dirname)).toMatchInlineSnapshot(`
       Array [
         Object {
+          "component": [Component "(cwd)/test/components/container/index.marko"],
+          "fixtures": Object {
+            "data": Object {
+              "ext": ".js",
+              "fixture": Object {
+                "model": Promise {},
+                "renderBody": [Function],
+              },
+              "name": "data",
+              "path": "(cwd)/test/components/container/fixtures/data.js",
+              "render": [Function],
+              "toString": [Function],
+            },
+          },
+          "fixturesPath": "(cwd)/test/components/container/fixtures",
+          "name": "container",
+          "path": "(cwd)/test/components/container/index.marko",
+        },
+        Object {
           "component": [Component "(cwd)/test/components/hello/index.marko"],
           "fixtures": Object {
             "data": Object {
