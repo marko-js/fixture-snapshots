@@ -41,8 +41,9 @@ src/
   components/
     app-carousel/
       fixtures/
-        data.json # data to render app-carousel/index.marko with
-        template.marko # a template assumed to use <app-carousel>
+        fixture1.js # exports data to render app-carousel/index.marko with
+        fixture2.json # data to render app-carousel/index.marko with
+        fixture3.marko # a template assumed to use <app-carousel>
       index.marko
 ```
 
@@ -62,10 +63,12 @@ Loads all the fixtures under `path` and generates tests that render them and com
 
 ```bash
 fixtures/
-  data.json
-  data.html # snapshot of app-carousel/index.marko rendered with data.json
-  template.marko
-  template.html # snapshot of a template.marko
+  fixture1.js
+  fixture1.html # snapshot of app-carousel/index.marko rendered with data from fixture1.js
+  fixture2.json
+  fixture2.html # snapshot of app-carousel/index.marko rendered with data from fixture2.json
+  fixture3.marko
+  fixture3.html # snapshot of fixture3.marko
 ```
 
 ```typescript
@@ -96,7 +99,7 @@ describe("fixture snapshots", () => {
 #### Usage with Mocha
 
 ```javascript
-import runSnapshotTests from "@marko/fixture-snapshots/mocha"; 
+import runSnapshotTests from "@marko/fixture-snapshots/mocha";
 // const runSnapshotTests = require("@marko/fixture-snapshots/mocha").default;
 
 describe("fixture snapshots", () => {
@@ -135,7 +138,7 @@ type ComponentFixtures = {
     {
       name: string;
       path: string; // the absolute path to the fixture
-      ext: ".json" | ".marko";
+      ext: ".js" | ".json" | ".marko";
       fixture: object | Template; // the loaded fixture
       render: () => RenderResult; // render the fixture, return type is the same as `@marko/testing-library`'s render function
       toString: (normalizer = defaultNormalizer) => Promise<string>;
