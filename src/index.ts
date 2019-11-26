@@ -103,17 +103,19 @@ export function defaultNormalizer(container: ContainerNode) {
   const document = container.ownerDocument!;
   const treeWalker = document.createTreeWalker(
     clone,
-    SHOW_ELEMENT & SHOW_COMMENT
+    SHOW_ELEMENT | SHOW_COMMENT
   );
 
   let node: Comment | Element;
-  while ((node = treeWalker.nextNode() as Comment | Element)) {
+  let nextNode = treeWalker.nextNode();
+  while ((node = nextNode as Comment | Element)) {
+    nextNode = treeWalker.nextNode();
     if (node.nodeType === COMMENT_NODE) {
       (node as Comment).remove();
     } else {
       Array.from((node as Element).attributes)
         .map(attr => attr.name)
-        .filter(attrName => /^data-(w-|widget$|marko$)/.test(attrName))
+        .filter(attrName => /^data-(w-|widget$|marko(-|$))/.test(attrName))
         .forEach(attrName => (node as Element).removeAttribute(attrName));
     }
   }
