@@ -1,7 +1,10 @@
 import fs from "fs";
 import path from "path";
 import assert from "assert";
+import { cleanup } from "@marko/testing-library";
 import { findProjectFixtures, defaultNormalizer } from "./";
+
+declare const before: (fn: () => any) => any;
 
 export default function snapshotComponentFixtures(
   dir: string,
@@ -9,6 +12,8 @@ export default function snapshotComponentFixtures(
 ) {
   findProjectFixtures(dir, otherOptions).forEach(component => {
     describe(component.name, () => {
+      before(cleanup);
+      afterEach(cleanup);
       Object.keys(component.fixtures).forEach(name => {
         it(name, async () => {
           const fixture = component.fixtures[name];
