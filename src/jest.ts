@@ -1,3 +1,4 @@
+import { cleanup } from "@marko/testing-library";
 import { findProjectFixtures, defaultNormalizer } from "./";
 import { toMatchFile } from "jest-file-snapshot";
 
@@ -9,6 +10,8 @@ export default function snapshotComponentFixtures(
 ) {
   findProjectFixtures(path, otherOptions).forEach(component => {
     describe(component.name, () => {
+      beforeAll(cleanup);
+      afterEach(cleanup);
       Object.keys(component.fixtures).forEach(name => {
         it(name, async () => {
           const fixture = component.fixtures[name];
