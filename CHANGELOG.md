@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/marko-js/fixture-snapshots/compare/v1.1.0...v1.1.1) (2020-02-22)
+
+
+### Bug Fixes
+
+* call @marko/testing-library's cleanup between test runs ([#3](https://github.com/marko-js/fixture-snapshots/issues/3)) ([2455831](https://github.com/marko-js/fixture-snapshots/commit/2455831f5f62dcd88025ab8e814ca77333920e01))
+
 ## [1.1.0](https://github.com/marko-js/fixture-snapshots/compare/v1.0.0...v1.1.0) (2019-11-26)
 
 
