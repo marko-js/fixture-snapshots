@@ -56,8 +56,10 @@
   },
   "types": "dist/index.d.ts",
   "dependencies": {
+    "caller-path": "^3.0.0",
     "fast-glob": "^3.1.0",
-    "jest-file-snapshot": "^0.3.7"
+    "jest-file-snapshot": "^0.3.7",
+    "pkg-dir": "^4.2.0"
   },
   "peerDependencies": {
     "marko": "^3 || ^4",

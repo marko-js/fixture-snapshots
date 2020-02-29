@@ -57,9 +57,7 @@ npm install marko @marko/fixture-snapshots @marko/testing-library
 
 ## Automatic Snapshot API
 
-### `runSnapshotTests(path: string, options?: SnapshotOptions)` (default export)
-
-Loads all the fixtures under `path` and generates tests that render them and compare/generate snapshots:
+The automatic snapshot API can be used to generate and assert snapshots for the fixtures at a component level or for your entire project. The snapshots will be stored as `.html` files next to the fixture:
 
 ```bash
 fixtures/
@@ -70,6 +68,10 @@ fixtures/
   fixture3.marko
   fixture3.html # snapshot of fixture3.marko
 ```
+
+### `runProjectSnapshotTests(path: string, options?: SnapshotOptions)`
+
+Loads the fixtures for all components under `path` and generates tests that render them and compare/generate snapshots.
 
 ```typescript
 type SnapshotOptions = {
@@ -86,11 +88,13 @@ type SnapshotOptions = {
 #### Usage with Jest
 
 ```javascript
-import runSnapshotTests from "@marko/fixture-snapshots/jest";
-// const runSnapshotTests = require("@marko/fixture-snapshots/jest").default;
+import path from "path";
+import { runProjectSnapshotTests } from "@marko/fixture-snapshots/jest";
+// const { runProjectSnapshotTests } = require("@marko/fixture-snapshots/jest");
 
 describe("fixture snapshots", () => {
-  runSnapshotTests(__dirname);
+  // run snapshot tests for all components under src
+  runProjectSnapshotTests(path.join(__dirname, "./src"));
 });
 ```
 
@@ -99,21 +103,41 @@ describe("fixture snapshots", () => {
 #### Usage with Mocha
 
 ```javascript
-import runSnapshotTests from "@marko/fixture-snapshots/mocha";
-// const runSnapshotTests = require("@marko/fixture-snapshots/mocha").default;
+import path from "path";
+import { runProjectSnapshotTests } from "@marko/fixture-snapshots/mocha";
+// const { runProjectSnapshotTests } = require("@marko/fixture-snapshots/mocha");
 
 describe("fixture snapshots", () => {
-  runSnapshotTests(__dirname);
+  // run snapshot tests for all components under src
+  runProjectSnapshotTests(path.join(__dirname, "./src"));
 });
 ```
 
 > You can set `UPDATE_SNAPSHOTS` as an [environment variable](https://en.wikipedia.org/wiki/Environment_variable) (`UPDATE_SNAPSHOTS=true mocha`) to update the fixture snapshots
 
+### `runComponentSnapshotTests(options?: SnapshotOptions)`
+
+Loads the fixtures for the closest component to the test file and generates tests that render it and compare/generate snapshots:
+
+#### Usage with Jest/Mocha
+
+```javascript
+import { runComponentSnapshotTests } from "@marko/fixture-snapshots/jest"; // or mocha
+
+describe("app-carousel", () => {
+  runComponentSnapshotTests();
+
+  it("another test", () => { ... });
+});
+```
+
 ## API
 
 ```js
 import {
-  findAllFixtures,
+  findComponentFixtures,
+  findClosestComponentFixtures,
+  findProjectFixtures,
   defaultSerializer,
   defaultNormalizer
 } from "@marko/fixture-snapshots";
@@ -153,6 +177,32 @@ type ComponentFixtures = {
 import { fireEvent } from "@marko/testing-library";
 import { findComponentFixtures } from "@marko/fixture-snapshots";
 const { fixtures } = findComponentFixtures(require.resolve("../index.marko"));
+
+test("example", () => {
+  const result = await fixtures.example.render();
+  const button = result.getByRole("button");
+  await fireEvent.click(button);
+  expect(result.emitted("clicky-click")).toHaveLength(1);
+});
+```
+
+### `findClosestComponentFixtures(options?: ClosestComponentOptions): ComponentFixtures`
+
+Automatically finds and loads the fixtures for the closest component. Searches in the `cwd` and checks if `fixtureDir` exists, if not, it goes to the parent directory and checks. Once the `fixtureDir` is found, it begins searching in the directory in which it was found for an `index.marko` or `template.marko`, then the parent, and so on. The search will not leave the project root (the directory where the `package.json` lives).
+
+```typescript
+type ClosestComponentOptions = {
+  cwd: string; // the directory to start searching from (default: call location)
+  fixtureDir: string; // the name of the fixture directory to search for (default: "fixtures")
+};
+```
+
+#### Example
+
+```js
+import { fireEvent } from "@marko/testing-library";
+import { findClosestComponentFixtures } from "@marko/fixture-snapshots";
+const { fixtures } = findClosestComponentFixtures();
 
 test("example", () => {
   const result = await fixtures.example.render();

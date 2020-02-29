@@ -1,6 +1,9 @@
+import fs from "fs";
 import path from "path";
 import glob from "fast-glob";
 import prettyFormat from "pretty-format";
+import getCallerPath from "caller-path";
+import getPkgDir from "pkg-dir";
 import { render } from "@marko/testing-library";
 
 type ContainerNode = DocumentFragment | Element;
@@ -23,13 +26,61 @@ interface ComponentFixtures {
 }
 
 const { DOMElement, DOMCollection } = prettyFormat.plugins;
+const DEFAULT_FIXTURES_DIR = "fixtures";
+const COMPONENT_FILES = [
+  "index.marko",
+  "index.js",
+  "renderer.js",
+  "template.marko"
+] as const;
+
+export function findClosestComponentFixtures({
+  cwd = "",
+  fixtureDir = DEFAULT_FIXTURES_DIR,
+  depth = 0
+}) {
+  if (!cwd) {
+    const callerPath = getCallerPath({ depth });
+    cwd = callerPath ? path.dirname(callerPath) : "";
+  }
+  if (cwd) {
+    const packageDir = getPkgDir.sync(cwd);
+
+    let fixturesDirPath;
+    do {
+      const potentialFixturesDir = path.join(cwd, fixtureDir);
+      if (fs.existsSync(potentialFixturesDir)) {
+        fixturesDirPath = potentialFixturesDir;
+      } else {
+        cwd = path.dirname(cwd);
+      }
+    } while (!fixturesDirPath && cwd !== packageDir);
+
+    let componentPath;
+    do {
+      const foundComponentFile = COMPONENT_FILES.find(file =>
+        fs.existsSync(path.join(cwd, file))
+      );
+      if (foundComponentFile) {
+        componentPath = path.join(cwd, foundComponentFile);
+      } else {
+        cwd = path.dirname(cwd);
+      }
+    } while (!fixturesDirPath && cwd !== packageDir);
+
+    if (componentPath && fixturesDirPath) {
+      return findComponentFixtures(componentPath, { fixturesDirPath });
+    }
+  }
+}
 
 export function findComponentFixtures(
   componentPath: string,
-  { fixtureDir = "fixtures" } = {}
+  { fixturesDirPath = "", fixtureDir = DEFAULT_FIXTURES_DIR } = {}
 ) {
   const componentName = inferName(componentPath);
-  const fixturesPath = path.join(path.dirname(componentPath), fixtureDir);
+  const fixturesPath =
+    fixturesDirPath || path.join(path.dirname(componentPath), fixtureDir);
   const fixtures = glob
     .sync("!(*.marko.).{json,marko,js}", { cwd: fixturesPath })
     .map((fixtureRelativePath: string) => {
@@ -78,7 +129,7 @@ export function findComponentFixtures(
 
 export function findProjectFixtures(
   cwd: string,
-  { ignore = ["node_modules"], fixtureDir = "fixtures" } = {}
+  { ignore = ["node_modules"], fixtureDir = DEFAULT_FIXTURES_DIR } = {}
 ) {
   return glob
     .sync("**/*.marko", { cwd, ignore })

@@ -2,11 +2,16 @@ import fs from "fs";
 import path from "path";
 import assert from "assert";
 import { cleanup } from "@marko/testing-library";
-import { findProjectFixtures, defaultNormalizer } from "./";
+import {
+  findProjectFixtures,
+  findClosestComponentFixtures,
+  defaultNormalizer
+} from "./";
 
 declare const before: (fn: () => any) => any;
 
-export default function snapshotComponentFixtures(
+export default runProjectSnapshotTests;
+export function runProjectSnapshotTests(
   dir: string,
   { normalize = defaultNormalizer, ...otherOptions } = {}
 ) {
@@ -22,6 +27,31 @@ export default function snapshotComponentFixtures(
             await fixture.toString(normalize)
           );
         });
+      });
+    });
+  });
+}
+
+export function runComponentSnapshotTests({
+  normalize = defaultNormalizer,
+  ...otherOptions
+} = {}) {
+  const component = findClosestComponentFixtures({ ...otherOptions, depth: 1 });
+
+  if (!component) {
+    throw new Error("Unable to find a component with fixtures");
+  }
+
+  describe(component.name + " fixtures", () => {
+    before(cleanup);
+    afterEach(cleanup);
+    Object.keys(component.fixtures).forEach(name => {
+      it(name, async () => {
+        const fixture = component.fixtures[name];
+        snapshot(
+          fixture.path.replace(fixture.ext, ".html"),
+          await fixture.toString(normalize)
+        );
       });
     });
   });
