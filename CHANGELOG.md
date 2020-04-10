@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.2](https://github.com/marko-js/fixture-snapshots/compare/v1.1.1...v1.1.2) (2020-04-10)
+
+
+### Bug Fixes
+
+* use system path separator in inferName regex ([576a159](https://github.com/marko-js/fixture-snapshots/commit/576a159c7f98ee142da41c0651a31e041be386af))
+
 ### [1.1.1](https://github.com/marko-js/fixture-snapshots/compare/v1.1.0...v1.1.1) (2020-02-22)
 
 
