@@ -125,8 +125,10 @@ export function defaultNormalizer(container: ContainerNode) {
   return clone;
 }
 
+const sep = path.sep;
+const nameRegex = new RegExp(`${sep}(([^${sep}]+)${sep}([^${sep}]+)\\.marko$)`);
 function inferName(p: string) {
-  const match = /\/([^/]+)\/([^/]+)\.marko$/.exec(p)!;
+  const match = nameRegex.exec(p)!;
   const indexOrTemplate = match[2] === "index" || match[2] === "template";
   return indexOrTemplate ? match[1] : match[2];
 }
