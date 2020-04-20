@@ -99,24 +99,70 @@ const SHOW_ELEMENT = 1;
 const SHOW_COMMENT = 128;
 const COMMENT_NODE = 8;
 export function defaultNormalizer(container: ContainerNode) {
+  const idMap: Map<string, number> = new Map();
   const clone = container.cloneNode(true) as ContainerNode;
   const document = container.ownerDocument!;
-  const treeWalker = document.createTreeWalker(
+  const commentAndElementWalker = document.createTreeWalker(
     clone,
     SHOW_ELEMENT | SHOW_COMMENT
   );
 
   let node: Comment | Element;
-  let nextNode = treeWalker.nextNode();
+  let nextNode = commentAndElementWalker.nextNode();
   while ((node = nextNode as Comment | Element)) {
-    nextNode = treeWalker.nextNode();
-    if (node.nodeType === COMMENT_NODE) {
-      (node as Comment).remove();
+    nextNode = commentAndElementWalker.nextNode();
+    if (isComment(node)) {
+      node.remove();
     } else {
-      Array.from((node as Element).attributes)
-        .map(attr => attr.name)
-        .filter(attrName => /^data-(w-|widget$|marko(-|$))/.test(attrName))
-        .forEach(attrName => (node as Element).removeAttribute(attrName));
+      const { id, attributes } = node;
+      if (/\d/.test(id)) {
+        let idIndex = idMap.get(id);
+
+        if (idIndex === undefined) {
+          idIndex = idMap.size;
+          idMap.set(id, idIndex);
+        }
+
+        node.id = `GENERATED-${idIndex}`;
+      }
+
+      for (let i = attributes.length; i--; ) {
+        const attr = attributes[i];
+
+        if (/^data-(w-|widget$|marko(-|$))/.test(attr.name)) {
+          node.removeAttributeNode(attr);
+        }
+      }
+    }
+  }
+
+  if (idMap.size) {
+    const elementWalker = document.createTreeWalker(clone, SHOW_ELEMENT);
+
+    nextNode = elementWalker.nextNode();
+    while ((node = nextNode as Element)) {
+      nextNode = elementWalker.nextNode();
+      const { attributes } = node;
+
+      for (let i = attributes.length; i--; ) {
+        const attr = attributes[i];
+        const { value } = attr;
+        const updated = value
+          .split(" ")
+          .map(part => {
+            const idIndex = idMap.get(part);
+            if (idIndex === undefined) {
+              return part;
+            }
+
+            return `GENERATED-${idIndex}`;
+          })
+          .join(" ");
+
+        if (value !== updated) {
+          attr.value = updated;
+        }
+      }
     }
   }
 
@@ -131,4 +177,8 @@ function inferName(p: string) {
   const match = nameRegex.exec(p)!;
   const indexOrTemplate = match[2] === "index" || match[2] === "template";
   return indexOrTemplate ? match[1] : match[2];
+}
+
+function isComment(node: Node): node is Comment {
+  return node.nodeType === COMMENT_NODE;
 }
