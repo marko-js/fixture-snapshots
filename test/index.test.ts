@@ -88,6 +88,25 @@ describe("findProjectFixtures", () => {
           "path": "(cwd)/test/components/container/index.marko",
         },
         Object {
+          "component": [Component "(cwd)/test/components/fancy-form/index.marko"],
+          "fixtures": Object {
+            "data": Object {
+              "ext": ".json",
+              "fixture": Object {
+                "firstName": "Michael",
+                "lastName": "Rawlings",
+              },
+              "name": "data",
+              "path": "(cwd)/test/components/fancy-form/fixtures/data.json",
+              "render": [Function],
+              "toString": [Function],
+            },
+          },
+          "fixturesPath": "(cwd)/test/components/fancy-form/fixtures",
+          "name": "fancy-form",
+          "path": "(cwd)/test/components/fancy-form/index.marko",
+        },
+        Object {
           "component": [Component "(cwd)/test/components/hello/index.marko"],
           "fixtures": Object {
             "data": Object {
