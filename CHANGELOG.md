@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/marko-js/fixture-snapshots/compare/v1.1.3...v2.0.0) (2020-04-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* IDs are no longer always preserved
+
+### Features
+
+* normalize generated ids ([966f3e9](https://github.com/marko-js/fixture-snapshots/commit/966f3e952437ff962dbf570abbe3391926356d67))
+
 ### [1.1.3](https://github.com/marko-js/fixture-snapshots/compare/v1.1.2...v1.1.3) (2020-04-10)
 
 
