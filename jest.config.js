@@ -1,8 +1,7 @@
 module.exports = {
-  preset: "@marko/jest",
+  preset: "@marko/jest/preset/node",
   transform: {
     "\\.ts$": "ts-jest"
   },
-  testEnvironment: "node",
   coverageReporters: []
 };

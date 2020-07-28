@@ -38,9 +38,11 @@ export function findComponentFixtures(
       const fixtureName = path
         .basename(fixturePath)
         .slice(0, -1 * fixtureExtension.length);
+      let component = require(componentPath);
+      component = component.default || component;
       const renderFn =
         [".json", ".js"].indexOf(fixtureExtension) !== -1
-          ? () => render(require(componentPath), require(fixturePath))
+          ? () => render(component, require(fixturePath))
           : () => render(require(fixturePath));
       return {
         async toString(normalizer = defaultNormalizer) {
@@ -56,17 +58,16 @@ export function findComponentFixtures(
         render: renderFn
       };
     })
-    .reduce(
-      (lookup, current) => {
-        lookup[current.name] = current;
-        return lookup;
-      },
-      {} as ComponentFixtures["fixtures"]
-    );
+    .reduce((lookup, current) => {
+      lookup[current.name] = current;
+      return lookup;
+    }, {} as ComponentFixtures["fixtures"]);
   if (Object.keys(fixtures).length) {
     return {
       get component() {
-        return require(componentPath);
+        let component = require(componentPath);
+        component = component.default || component;
+        return component;
       },
       path: componentPath,
       name: componentName,
