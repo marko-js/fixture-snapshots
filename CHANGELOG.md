@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/marko-js/fixture-snapshots/compare/v2.0.0...v2.1.0) (2020-07-30)
+
+
+### Features
+
+* **marko 5:** make changes to make it work for marko 5 ([c02ee04](https://github.com/marko-js/fixture-snapshots/commit/c02ee0405e86f9e8a5a17a8255d9314160740bfb))
+
 ## [2.0.0](https://github.com/marko-js/fixture-snapshots/compare/v1.1.3...v2.0.0) (2020-04-20)
 
 
