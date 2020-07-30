@@ -6,6 +6,7 @@ expect.addSnapshotSerializer({
     return typeof val._ === "function" && val.meta && val.meta.id && val.path;
   },
   print(val, printer) {
+    // @ts-ignore
     return `[Component ${printer(val.path)}]`;
   }
 });
@@ -15,6 +16,7 @@ expect.addSnapshotSerializer({
     return typeof val === "string" && val.includes(process.cwd());
   },
   print(val) {
+    // @ts-ignore
     return JSON.stringify(val.replace(process.cwd(), "(cwd)"));
   }
 });
