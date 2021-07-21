@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/marko-js/fixture-snapshots/compare/v2.1.0...v2.1.1) (2021-07-21)
+
+
+### Bug Fixes
+
+* semver ranges for peer deps ([deddad6](https://github.com/marko-js/fixture-snapshots/commit/deddad6c6c8683d4a009cb4701682c51add70ead))
+
 ## [2.1.0](https://github.com/marko-js/fixture-snapshots/compare/v2.0.0...v2.1.0) (2020-07-30)
 
 
