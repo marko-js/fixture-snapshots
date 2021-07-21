@@ -60,7 +60,7 @@
     "jest-file-snapshot": "^0.3.7"
   },
   "peerDependencies": {
-    "@marko/testing-library": "^2.1.0",
-    "marko": "^3 || ^4 || ^5"
+    "@marko/testing-library": "2 - 5",
+    "marko": "3 - 5"
   }
 }
