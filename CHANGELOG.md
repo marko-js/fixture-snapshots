@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.4](https://github.com/marko-js/fixture-snapshots/compare/v2.1.3...v2.1.4) (2021-10-21)
+
+
+### Bug Fixes
+
+* improve ts types ([787c411](https://github.com/marko-js/fixture-snapshots/commit/787c4112c887cbca391bf4c344be9683d2bfb636))
+
 ### [2.1.3](https://github.com/marko-js/fixture-snapshots/compare/v2.1.2...v2.1.3) (2021-10-21)
 
 
