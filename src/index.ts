@@ -1,6 +1,6 @@
 import path from "path";
 import glob from "fast-glob";
-import prettyFormat from "pretty-format";
+import prettyFormat, { plugins } from "pretty-format";
 import { render } from "@marko/testing-library";
 
 type ContainerNode = DocumentFragment | Element;
@@ -22,7 +22,7 @@ interface ComponentFixtures {
   >;
 }
 
-const { DOMElement, DOMCollection } = prettyFormat.plugins;
+const { DOMElement, DOMCollection } = plugins;
 
 export function findComponentFixtures(
   componentPath: string,
@@ -58,10 +58,13 @@ export function findComponentFixtures(
         render: renderFn
       };
     })
-    .reduce((lookup, current) => {
-      lookup[current.name] = current;
-      return lookup;
-    }, {} as ComponentFixtures["fixtures"]);
+    .reduce(
+      (lookup, current) => {
+        lookup[current.name] = current;
+        return lookup;
+      },
+      {} as ComponentFixtures["fixtures"]
+    );
   if (Object.keys(fixtures).length) {
     return {
       get component() {

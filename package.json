@@ -57,7 +57,8 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "fast-glob": "^3.1.0",
-    "jest-file-snapshot": "^0.3.7"
+    "jest-file-snapshot": "^0.3.7",
+    "pretty-format": "^27.3.1"
   },
   "peerDependencies": {
     "@marko/testing-library": "2 - 5",
