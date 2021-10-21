@@ -36,9 +36,11 @@ function snapshot(file: string, contents: string) {
     try {
       assert.equal(contents, expected);
     } catch (err) {
-      err.snapshot = true;
-      err.name = err.name.replace(" [ERR_ASSERTION]", "");
-      err.message = `${path.relative(process.cwd(), file)}\n\n${err.message}`;
+      if (err instanceof Error) {
+        (err as any).snapshot = true;
+        err.name = err.name.replace(" [ERR_ASSERTION]", "");
+        err.message = `${path.relative(process.cwd(), file)}\n\n${err.message}`;
+      }
 
       throw err;
     }
