@@ -39,7 +39,7 @@ export function findComponentFixtures(
         .basename(fixturePath)
         .slice(0, -1 * fixtureExtension.length);
       let component = require(componentPath);
-      component = component.default || component;    
+      component = component.default || component;
       const renderFn =
         [".json", ".js"].indexOf(fixtureExtension) !== -1
           ? () => render(component, (require(fixturePath).default || require(fixturePath)))
