@@ -43,7 +43,7 @@ export function findComponentFixtures(
       const renderFn =
         [".json", ".js"].indexOf(fixtureExtension) !== -1
           ? () => render(component, (require(fixturePath).default || require(fixturePath)))
-          : () => render((require(fixturePath).default || require(fixturePath)));
+          : () => render(require(fixturePath).default || require(fixturePath));
       return {
         async toString(normalizer = defaultNormalizer) {
           const result = await renderFn();
