@@ -42,15 +42,15 @@ export function findComponentFixtures(
       component = component.default || component;
       const renderFn =
         [".json", ".js"].indexOf(fixtureExtension) !== -1
-          ? () => render(component, require(fixturePath))
-          : () => render(require(fixturePath));
+          ? () => render(component, (require(fixturePath).default || require(fixturePath)))
+          : () => render(require(fixturePath).default || require(fixturePath));
       return {
         async toString(normalizer = defaultNormalizer) {
           const result = await renderFn();
           return defaultSerializer(normalizer(result.container));
         },
         get fixture() {
-          return require(fixturePath);
+          return (require(fixturePath).default || require(fixturePath));
         },
         path: fixturePath,
         ext: fixtureExtension,
