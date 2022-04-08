@@ -17,7 +17,7 @@
     "mocha": "^6.2.2",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
-    "standard-version": "^7.0.0",
+    "standard-version": "^8.0.1",
     "ts-jest": "^27.0.7",
     "ts-node": "^10.3.0",
     "tslint": "^5.20.1",
