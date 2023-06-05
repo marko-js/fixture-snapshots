@@ -18,8 +18,8 @@ export default function snapshotComponentFixtures(
       Object.keys(component.fixtures).forEach(name => {
         it(name, async () => {
           const fixture = component.fixtures[name];
-          const fileExtension = getArcFlag(component.path); // this returns "[mobile]"
-          const replaceValue = fileExtension.length === 0 ? ".html" : `${fileExtension}.html`;
+          const arcFlag = getArcFlag(component.path); // this returns "[mobile]"
+          const replaceValue = arcFlag.length === 0 ? ".html" : `${arcFlag}.html`;
           
           snapshot(
             fixture.path.replace(fixture.ext, replaceValue),
