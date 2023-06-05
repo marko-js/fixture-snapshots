@@ -134,6 +134,32 @@ describe("findProjectFixtures", () => {
           "name": "hello",
           "path": "(cwd)/test/components/hello/index.marko",
         },
+        Object {
+          "component": [Component "(cwd)/test/components/hello/index[mobile].marko"],
+          "fixtures": Object {
+            "data": Object {
+              "ext": ".json",
+              "fixture": Object {
+                "name": "Data",
+              },
+              "name": "data",
+              "path": "(cwd)/test/components/hello/fixtures/data.json",
+              "render": [Function],
+              "toString": [Function],
+            },
+            "template": Object {
+              "ext": ".marko",
+              "fixture": [Component "(cwd)/test/components/hello/fixtures/template.marko"],
+              "name": "template",
+              "path": "(cwd)/test/components/hello/fixtures/template.marko",
+              "render": [Function],
+              "toString": [Function],
+            },
+          },
+          "fixturesPath": "(cwd)/test/components/hello/fixtures",
+          "name": "hello",
+          "path": "(cwd)/test/components/hello/index[mobile].marko",
+        },
       ]
     `);
   });

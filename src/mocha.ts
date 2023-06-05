@@ -3,6 +3,7 @@ import path from "path";
 import assert from "assert";
 import { cleanup } from "@marko/testing-library";
 import { findProjectFixtures, defaultNormalizer } from "./";
+import { getArcFlag } from "./utils";
 
 declare const before: (fn: () => any) => any;
 
@@ -17,8 +18,11 @@ export default function snapshotComponentFixtures(
       Object.keys(component.fixtures).forEach(name => {
         it(name, async () => {
           const fixture = component.fixtures[name];
+          const fileExtension = getArcFlag(component.path); // this returns "[mobile]"
+          const replaceValue = fileExtension.length === 0 ? ".html" : `${fileExtension}.html`;
+          
           snapshot(
-            fixture.path.replace(fixture.ext, ".html"),
+            fixture.path.replace(fixture.ext, replaceValue),
             await fixture.toString(normalize)
           );
         });
