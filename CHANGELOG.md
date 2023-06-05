@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/marko-js/fixture-snapshots/compare/v2.1.6...v2.2.0) (2023-06-05)
+
+
+### Features
+
+* add arc support ([2812abe](https://github.com/marko-js/fixture-snapshots/commit/2812abe7e72c2b8a460444e58df71960f62f45b6))
+
+
+### Bug Fixes
+
+* fixture path to support commonjs and esm ([#19](https://github.com/marko-js/fixture-snapshots/issues/19)) ([28a7081](https://github.com/marko-js/fixture-snapshots/commit/28a70816cd6e0d2b4afc8a18644206a711507011))
+
 ### [2.1.7](https://github.com/marko-js/fixture-snapshots/compare/v2.1.6...v2.1.7) (2022-04-08)
 
 
