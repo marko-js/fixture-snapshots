@@ -17,10 +17,9 @@ export default function snapshotComponentFixtures(
         it(name, async () => {
           const fixture = component.fixtures[name];
           const arcFlag = getArcFlag(component.path); // this returns "[mobile]"
-          const replaceValue = arcFlag.length === 0 ? ".html" : `${arcFlag}.html`;
           
           expect(await fixture.toString(normalize)).toMatchFile(
-            fixture.path.replace(fixture.ext, replaceValue)
+            fixture.path.replace(fixture.ext, `${arcFlag}.html`)
           );
         });
       });
