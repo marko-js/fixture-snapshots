@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.1](https://github.com/marko-js/fixture-snapshots/compare/v2.2.0...v2.2.1) (2023-10-05)
+
+
+### Bug Fixes
+
+* missing tslib dependency ([b26dbc5](https://github.com/marko-js/fixture-snapshots/commit/b26dbc5d442134aa3278892b3a3c25d912878eb8))
+
 ## [2.2.0](https://github.com/marko-js/fixture-snapshots/compare/v2.1.6...v2.2.0) (2023-06-05)
 
 
